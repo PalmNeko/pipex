@@ -1,14 +1,16 @@
 
 NAME          = pipex
 SRCDIR        = .
-EXCLUDE_PATH  = "*/libft/*.c" "*/cident/*" "*/test/*" "*bonus*.c"
-SRCS          = $(shell find $(SRCDIR) -name "*.c" $(addprefix -not -path, $(EXCLUDE_PATH)) -type f)
-SRCS          = $(shell find $(SRCDIR) -name "*.c" -type f)
+EXCLUDE_PATH  = */libft/*.c */cident/* */test/* *bonus*.c
+EX_PARAGRAPH  = $(foreach path,$(EXCLUDE_PATH),-not -path '$(path)')
+SRCS          = $(shell find $(SRCDIR) -name "*.c" $(EX_PARAGRAPH) -type f)
 OBJS          = $(SRCS:%.c=%.o)
 DEPENDS       = $(OBJS:.o=.d)
 CFLAGS        += -Wall -Wextra -Werror -MMD -MP $(addprefix -I,$(LIBS))
 LDFLAGS       += $(addprefix -L,$(LIBS))
 LDLIBS        += -lft
+LIBFT         = libft
+LIBS          = $(LIBFT)
 
 all: $(NAME)
 
@@ -42,9 +44,7 @@ bonus:
 	make -C .bonus.mk
 
 $(LIBFT):
-	bash -c "$(curl https://raw.githubusercontent.com/PalmNeko/Libft/main/install.sh)"
-
-LIBFT         = libft
-LIBS          = $(LIBFT)
+	git clone git@github.com:PalmNeko/Libft.git $@
+	cd $@ && make
 
 -include $(DEPENDS)

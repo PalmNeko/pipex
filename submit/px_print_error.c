@@ -6,11 +6,12 @@
 /*   By: tookuyam <tookuyam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:13:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/06/30 13:13:27 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/06/30 13:18:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	px_print_error(int px_main_error)
 {
+	(void)px_main_error;
 	return ;
 }
