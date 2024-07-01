@@ -6,13 +6,14 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/01 19:20:09 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:44:54 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "px_errors.h"
 #include "px.h"
 
@@ -54,10 +55,10 @@ int	px_pipex_from_file(int argc, char *argv[])
 	index = 1;
 	while (index < argc)
 	{
-		wait(&stat);
-		while (! WIFEXITED(stat))
-    		wait(&stat);
-		index++;
+		if (wait(&stat) == -1 && (perror("wait"), 1))
+			break ;
+		if (WIFEXITED(stat) || WIFSIGNALED(stat))
+    		index++;
 	}
     close(pre_fds[1]);
     close(pre_fds[0]);
