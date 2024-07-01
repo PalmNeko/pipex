@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   px_pipex_from_file.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/01 16:42:12 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:08:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,7 @@ int	px_fork_read(char *file, int pre_pipe[2], int now_pipe[2])
 int	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 {
 	int	cpid;
-	int index;
 	
-	index = 0;
 	cpid = fork();
 	if (cpid == 0)
 	{
