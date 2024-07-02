@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
+#include "px.h"
 #include "libft.h"
 
 extern char	**environ;
@@ -34,15 +35,10 @@ int	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 	{
 		dup2(pre_pipe[0], 0);
 		dup2(now_pipe[1], 1);
-		close(pre_pipe[0]);
-		close(pre_pipe[1]);
-		close(now_pipe[0]);
-		close(now_pipe[1]);
-		if (execve(abs_path, (char *[]){cmd, NULL}, environ) == -1)
-		{
-			write(1, "error\n", 6);
-			exit(1);
-		}
+		px_close_pipe(pre_pipe);
+		px_close_pipe(now_pipe);
+		execve(abs_path, (char *[]){cmd, NULL}, environ);
+		px_errexit_child();
 	}
 	free(abs_path);
 	return (cpid);
