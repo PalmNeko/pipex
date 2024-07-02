@@ -6,14 +6,13 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 14:57:43 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:59:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "libft.h"
 #include "px_errors.h"
 #include "px.h"
 #include "px_types.h"
@@ -37,8 +36,7 @@ int	px_pipex_from_file(int argc, char *argv[])
 		f_fork = px_return_fork_for_file(index, argc);
 		if (f_fork == NULL || f_fork(argv[index], pre_fds, now_fds) == -1 || px_close_pipe(pre_fds) == -1)
 			return (-1);
-		pre_fds[0] = now_fds[0];
-		pre_fds[1] = now_fds[1];
+		ft_memmove(pre_fds, now_fds, sizeof(int) * 2);
 		index++;
 	}
 	if (px_wait_termed(argc - 1) == -1 || px_close_pipe(pre_fds) == -1)
