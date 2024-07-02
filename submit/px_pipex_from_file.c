@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/01 20:44:54 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:51:05 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,50 +17,43 @@
 #include "px_errors.h"
 #include "px.h"
 
-int	px_read_and_write(int read_fd, int write_fd);
+int	(*px_return_fork_for_file(int index, int argc))(char *, int[2], int[2]);
 
 int	px_pipex_from_file(int argc, char *argv[])
 {
-	int stat;
-    int index;
-    int pre_fds[2];
-    int now_fds[2];
+	int	index;
+	int	pre_fds[2];
+	int	now_fds[2];
+	int	(*f_fork)(char *, int pre_pipe[2], int now_pipe[2]);
 
-    pipe(pre_fds);
-    index = 1;
-    while (index < argc)
-    {
-		pipe(now_fds);
-		if (index == 1)
-		{
-			if (px_fork_read(argv[index], pre_fds, now_fds) == -1)
-				return (-1);
-		}
-		else if (index < argc - 1)
-		{
-			if (px_fork_execve(argv[index], pre_fds, now_fds) == -1)
-				return (-1);
-		}
-		else if (index == argc - 1)
-		{
-			if (px_fork_write(argv[index], pre_fds, now_fds) == -1)
-				return (-1);
-		}
-        close(pre_fds[0]);
-        close(pre_fds[1]);
-        pre_fds[0] = now_fds[0];
-        pre_fds[1] = now_fds[1];
-        index++;
-    }
+	pipe(pre_fds);
 	index = 1;
 	while (index < argc)
 	{
-		if (wait(&stat) == -1 && (perror("wait"), 1))
-			break ;
-		if (WIFEXITED(stat) || WIFSIGNALED(stat))
-    		index++;
+		pipe(now_fds);
+		f_fork = px_return_fork_for_file(index, argc);
+		if (f_fork == NULL || f_fork(argv[index], pre_fds, now_fds) == -1)
+				return (-1);
+		px_close_pipe(pre_fds);
+		pre_fds[0] = now_fds[0];
+		pre_fds[1] = now_fds[1];
+		index++;
 	}
-    close(pre_fds[1]);
-    close(pre_fds[0]);
-    return (0);
+	if (px_wait_termed(argc - 1) == -1)
+		return (-1);
+	px_close_pipe(pre_fds);
+	return (0);
+}
+
+int	(*px_return_fork_for_file(int index, int argc))
+	(char *str, int pre[2], int now[2])
+{
+	if (index == 1)
+		return (px_fork_read);
+	else if (index < argc - 1)
+		return (px_fork_execve);
+	else if (index == argc - 1)
+		return (px_fork_write);
+	else
+		return (NULL);
 }

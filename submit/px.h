@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/01 19:19:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:20:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int		px_fork_write(char *file, int pre_pipe[2], int now_pipe[2]);
 int		px_fork_read(char *file, int pre_pipe[2], int now_pipe[2]);
 int		px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2]);
 int		px_read_and_write(int read_fd, int write_fd);
+int		px_close_pipe(int pipe[2]);
+int		px_wait_termed(int child_cnt);
 
 #endif
