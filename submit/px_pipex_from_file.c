@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 13:52:34 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:58:16 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@
 #include <stdio.h>
 #include "px_errors.h"
 #include "px.h"
+#include "px_types.h"
 
-int	(*px_return_fork_for_file(int index, int argc))(char *, int[2], int[2]);
+t_f_px_fork	px_return_fork_for_file(int index, int argc);
 
 int	px_pipex_from_file(int argc, char *argv[])
 {
-	int	index;
-	int	pre_fds[2];
-	int	now_fds[2];
-	int	(*f_fork)(char *, int pre_pipe[2], int now_pipe[2]);
+	int			index;
+	int			pre_fds[2];
+	int			now_fds[2];
+	t_f_px_fork	f_fork;
 
-	pipe(pre_fds);
+	if (pipe(pre_fds) == -1)
+		return (-1);
 	index = 1;
 	while (index < argc)
 	{
@@ -45,8 +47,7 @@ int	px_pipex_from_file(int argc, char *argv[])
 	return (0);
 }
 
-int	(*px_return_fork_for_file(int index, int argc))
-	(char *str, int pre[2], int now[2])
+t_f_px_fork	px_return_fork_for_file(int index, int argc)
 {
 	if (index == 1)
 		return (px_fork_read);
