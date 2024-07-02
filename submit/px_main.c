@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   px_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:11:34 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/06/30 14:42:35 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:52:44 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	px_main(int argc, char *argv[])
 {
-	int result;
+	int	result;
 
 	if (argc < 5)
 		return (PX_EARGCNT);
