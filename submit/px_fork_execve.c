@@ -16,20 +16,25 @@
 #include "px.h"
 #include "libft.h"
 
-extern char	**environ;
-
 char	*px_resolve_command_path(char *command);
-char	*px_getenv_value(char *key);
 char	*px_resolve_path(char **path, char *target);
+void	free_termed_null(char **mems);
 
 int	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 {
-	int		cpid;
-	char	*abs_path;
+	extern char	**environ;
+	int			cpid;
+	char		*abs_path;
+	int			index;
+	char		**arguments;
 
-	abs_path = px_resolve_command_path(cmd);
-	if (abs_path == NULL)
+	index = 0;
+	arguments = ft_split(cmd, ' ');
+	if (arguments == NULL)
 		return (-1);
+	abs_path = px_resolve_command_path(arguments[0]);
+	if (abs_path == NULL)
+		return (free_termed_null(arguments), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{
@@ -37,11 +42,11 @@ int	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 		dup2(now_pipe[1], 1);
 		px_close_pipe(pre_pipe);
 		px_close_pipe(now_pipe);
-		execve(abs_path, (char *[]){cmd, NULL}, environ);
+		execve(abs_path, arguments, environ);
+		free_termed_null(arguments);
 		px_errexit_child();
 	}
-	free(abs_path);
-	return (cpid);
+	return (free_termed_null(arguments), free(abs_path), cpid);
 }
 
 char	*px_resolve_command_path(char *command)
@@ -51,16 +56,15 @@ char	*px_resolve_command_path(char *command)
 	char	*resolved;
 	size_t	index;
 
+	if (command == NULL)
+		return (ft_set_errno(ENOENT), NULL);
 	if (access(command, F_OK) == -1 && errno != ENOENT)
 		return (NULL);
-	paths = px_getenv_value("PATH");
+	paths = ft_getenv_value("PATH");
 	if (paths == NULL && errno != 0)
 		return (NULL);
 	else if (paths == NULL)
-	{
-		errno = ENOENT;
-		return (free(paths), NULL);
-	}
+		return (ft_set_errno(ENOENT), free(paths), NULL);
 	path_ary = ft_split(paths, ':');
 	free(paths);
 	if (path_ary == NULL)
@@ -101,28 +105,15 @@ char	*px_resolve_path(char **path, char *target)
 	return (NULL);
 }
 
-/**
- * @brief get value in memory from environ.environ(7)
- * @param key keyvalue
- */
-char	*px_getenv_value(char *key)
+void	free_termed_null(char **mems)
 {
-	size_t	index;
-	size_t	iter;
+	char	**iter;
 
-	index = 0;
-	while (environ[index] != NULL)
+	iter = mems;
+	while (*iter != NULL)
 	{
-		if (ft_strncmp(key, environ[index], ft_strlen(key)) == 0)
-			break ;
-		index++;
-	}
-	if (environ[index] == NULL)
-		return (NULL);
-	iter = 0;
-	while (environ[index][iter] != '=' && environ[index][iter] != '\0')
+		free(*iter);
 		iter++;
-	if (environ[index][iter] == '\0')
-		return (NULL);
-	return (ft_strdup(environ[index] + iter + 1));
+	}
+	free(mems);
 }
