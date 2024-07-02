@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 18:53:05 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:48:19 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		px_read_and_write(int read_fd, int write_fd);
 int		px_close_pipe(int pipe[2]);
 int		px_wait_termed(int child_cnt);
 void	px_errexit_child(void);
+void	px_perrinfo(char *info);
 
 #endif

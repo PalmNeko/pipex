@@ -21,12 +21,12 @@ int	px_fork_write_append(char *file, int pre_pipe[2], int now_pipe[2])
 	int	cpid;
 	int	fd;
 
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+	if (fd == -1)
+		return (px_perrinfo(file), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
-		if (fd == -1)
-			exit(1);
 		close(pre_pipe[1]);
 		close(now_pipe[0]);
 		close(now_pipe[1]);
@@ -36,5 +36,6 @@ int	px_fork_write_append(char *file, int pre_pipe[2], int now_pipe[2])
 		close(fd);
 		exit(0);
 	}
+	close(fd);
 	return (cpid);
 }

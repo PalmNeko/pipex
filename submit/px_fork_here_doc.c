@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:11:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 18:28:11 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:57:02 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	px_fork_here_doc(char *deliminator, int pre_pipe[2], int now_pipe[2])
 
 	fd = px_generate_heredoc_unlinked_fd(deliminator);
 	if (fd == -1)
-		return (-1);
+		return (px_perrinfo("here_doc"), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{

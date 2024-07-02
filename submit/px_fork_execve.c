@@ -34,7 +34,7 @@ int	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 		return (-1);
 	abs_path = px_resolve_command_path(arguments[0]);
 	if (abs_path == NULL)
-		return (free_termed_null(arguments), -1);
+		return (px_perrinfo(arguments[0]), free_termed_null(arguments), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{

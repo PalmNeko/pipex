@@ -6,11 +6,12 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:13:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 18:40:39 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:56:19 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <errno.h>
 #include "px_errors.h"
 #include "libft.h"
 
@@ -20,9 +21,9 @@ void	px_print_error(int px_main_error)
 {
 	char	*err_str;
 
-	if (px_main_error == -1)
+	if (errno != 0 && px_main_error == -1)
 		perror(NULL);
-	else
+	else if (px_main_error > 0)
 	{
 		err_str = px_str_error(px_main_error);
 		if (err_str != NULL)
