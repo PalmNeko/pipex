@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:13:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 18:41:02 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:45:45 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_f_px_fork	px_return_fork_for_here_doc(int index, int argc)
 	else if (index < argc - 1)
 		return (px_fork_execve);
 	else if (index == argc - 1)
-		return (px_fork_write);
+		return (px_fork_write_append);
 	else
 	{
 		errno = ERANGE;
