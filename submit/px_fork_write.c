@@ -24,7 +24,7 @@ int	px_fork_write(char *file, int pre_pipe[2], int now_pipe[2])
 	cpid = fork();
 	if (cpid == 0)
 	{
-		fd = open(file, O_WRONLY | O_CREAT, S_IRWXU);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 		if (fd == -1)
 			exit(1);
 		close(pre_pipe[1]);
