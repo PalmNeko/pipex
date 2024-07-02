@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:11:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 19:57:02 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:15:03 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	px_fork_here_doc(char *deliminator, int pre_pipe[2], int now_pipe[2])
 		close(fd);
 		exit(0);
 	}
+	close(fd);
 	return (cpid);
 }
 
@@ -63,7 +64,7 @@ int px_generate_heredoc_unlinked_fd(char *deliminator)
 		return (free(template), close(fd), close(rdonly_fd), -1);
 	free(template);
 	if (px_write_until_deliminator(fd, deliminator) == -1)
-		return (close(fd), -1);
+		return (close(fd), close(rdonly_fd), -1);
 	close(fd);
 	return (rdonly_fd);
 }
