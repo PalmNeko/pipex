@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   px_print_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:13:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/06/30 14:47:38 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:40:39 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	px_print_error(int px_main_error)
 char	*px_str_error(int px_main_error)
 {
 	if (px_main_error == PX_EARGCNT)
-		return ("You must pass four or more arguments.");
+		return ("You must include 2 command.");
 	else
 		return ("Unspecified Error");
 	return (NULL);

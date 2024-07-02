@@ -6,12 +6,13 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 16:59:18 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:22:38 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 #include "libft.h"
 #include "px_errors.h"
 #include "px.h"
@@ -44,6 +45,10 @@ int	px_pipex_from_file(int argc, char *argv[])
 	return (0);
 }
 
+/**
+ * @return NULL if occur error and set errno.
+ * ERROR ERANGE out of function index
+ */
 t_f_px_fork	px_return_fork_for_file(int index, int argc)
 {
 	if (index == 1)
@@ -53,5 +58,8 @@ t_f_px_fork	px_return_fork_for_file(int index, int argc)
 	else if (index == argc - 1)
 		return (px_fork_write);
 	else
+	{
+		errno = ERANGE;
 		return (NULL);
+	}
 }
