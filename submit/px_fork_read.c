@@ -15,10 +15,10 @@
 #include <fcntl.h>
 #include "px.h"
 
-int	px_fork_read(char *file, int pre_pipe[2], int now_pipe[2])
+pid_t	px_fork_read(char *file, int pre_pipe[2], int now_pipe[2])
 {
-	int	cpid;
-	int	fd;
+	pid_t	cpid;
+	int		fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)

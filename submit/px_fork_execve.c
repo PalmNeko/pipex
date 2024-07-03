@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -20,12 +21,12 @@ char	*px_resolve_command_path(char *command);
 char	*px_resolve_path(char **path, char *target);
 void	free_termed_null(char **mems);
 
-int	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
+pid_t	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 {
 	extern char	**environ;
 	int			cpid;
 	char		*abs_path;
-	int			index;
+	pid_t		index;
 	char		**arguments;
 
 	index = 0;

@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include "px.h"
 
-int	px_fork_write(char *file, int pre_pipe[2], int now_pipe[2])
+pid_t	px_fork_write(char *file, int pre_pipe[2], int now_pipe[2])
 {
-	int	cpid;
-	int	fd;
+	pid_t	cpid;
+	int		fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 	if (fd == -1)

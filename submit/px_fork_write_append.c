@@ -16,10 +16,10 @@
 #include <fcntl.h>
 #include "px.h"
 
-int	px_fork_write_append(char *file, int pre_pipe[2], int now_pipe[2])
+pid_t	px_fork_write_append(char *file, int pre_pipe[2], int now_pipe[2])
 {
-	int	cpid;
-	int	fd;
+	pid_t	cpid;
+	int		fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
 	if (fd == -1)
