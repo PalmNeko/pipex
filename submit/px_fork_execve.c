@@ -13,11 +13,13 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <errno.h>
 #include "px.h"
 #include "libft.h"
 
 char	*px_resolve_command_path(char *command);
+char	*px_resolve_path_str(char *path_str, char *target);
 char	*px_resolve_path(char **path, char *target);
 void	free_termed_null(char **mems);
 
@@ -53,12 +55,12 @@ pid_t	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 char	*px_resolve_command_path(char *command)
 {
 	char	*paths;
-	char	**path_ary;
 	char	*resolved;
-	size_t	index;
 
 	if (command == NULL)
 		return (ft_set_errno(ENOENT), NULL);
+	else if (ft_strmatch("^./", command) || ft_strmatch("^/", command))
+		return (ft_strdup(command));
 	if (access(command, F_OK) == -1 && errno != ENOENT)
 		return (NULL);
 	paths = ft_getenv_value("PATH");
@@ -66,11 +68,20 @@ char	*px_resolve_command_path(char *command)
 		return (NULL);
 	else if (paths == NULL)
 		return (ft_set_errno(ENOENT), free(paths), NULL);
-	path_ary = ft_split(paths, ':');
-	free(paths);
+	resolved = px_resolve_path_str(paths, command);
+	return (resolved);
+}
+
+char	*px_resolve_path_str(char *path_str, char *target)
+{
+	size_t	index;
+	char	*resolved;
+	char	**path_ary;
+
+	path_ary = ft_split(path_str, ':');
 	if (path_ary == NULL)
 		return (NULL);
-	resolved = px_resolve_path(path_ary, command);
+	resolved = px_resolve_path(path_ary, target);
 	index = 0;
 	while (path_ary[index] != NULL)
 		free(path_ary[index++]);

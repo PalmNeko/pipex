@@ -6,10 +6,11 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/03 13:50:23 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:25:20 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
@@ -19,31 +20,49 @@
 #include "px_types.h"
 
 t_f_px_fork	px_return_fork_for_file(int index, int argc);
+pid_t		px_pipe_for_file(int argc, char *argv[]);
 
 int	px_pipex_from_file(int argc, char *argv[])
+{
+	int		exit_status;
+	pid_t	last_pid;
+
+	last_pid = px_pipe_for_file(argc, argv);
+	if (last_pid == -1)
+		return (-1);
+	exit_status = px_wait_termed(argc - 1, last_pid);
+	if (exit_status == -1)
+		return (-1);
+	return (exit_status);
+}
+
+pid_t	px_pipe_for_file(int argc, char *argv[])
 {
 	int			index;
 	int			pre_fds[2];
 	int			now_fds[2];
-	t_f_px_fork	f_fork;
+	pid_t		last_pid;
+	pid_t		pid;
 
 	if (pipe(pre_fds) == -1)
 		return (-1);
 	index = 1;
+	last_pid = -1;
 	while (index < argc)
 	{
 		if (pipe(now_fds) == -1)
-			return (-1);
-		f_fork = px_return_fork_for_file(index, argc);
-		if (f_fork == NULL || f_fork(argv[index], pre_fds, now_fds) == -1
-			|| px_close_pipe(pre_fds) == -1)
+			return (px_close_pipe(pre_fds), -1);
+		pid = px_return_fork_for_file(index, argc)(
+				argv[index], pre_fds, now_fds);
+		if (index == argc - 2)
+			last_pid = pid;
+		if (pid == -1 || px_close_pipe(pre_fds) == -1)
 			return (-1);
 		ft_memmove(pre_fds, now_fds, sizeof(int) * 2);
 		index++;
 	}
-	if (px_wait_termed(argc - 1) == -1 || px_close_pipe(pre_fds) == -1)
-		return (-1);
-	return (0);
+	px_close_pipe(pre_fds);
+	return (last_pid);
 }
 
 /**
@@ -59,8 +78,5 @@ t_f_px_fork	px_return_fork_for_file(int index, int argc)
 	else if (index == argc - 1)
 		return (px_fork_write);
 	else
-	{
-		errno = ERANGE;
 		return (NULL);
-	}
 }
