@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/02 18:22:38 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:50:23 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	px_pipex_from_file(int argc, char *argv[])
 		if (pipe(now_fds) == -1)
 			return (-1);
 		f_fork = px_return_fork_for_file(index, argc);
-		if (f_fork == NULL || f_fork(argv[index], pre_fds, now_fds) == -1 || px_close_pipe(pre_fds) == -1)
+		if (f_fork == NULL || f_fork(argv[index], pre_fds, now_fds) == -1
+			|| px_close_pipe(pre_fds) == -1)
 			return (-1);
 		ft_memmove(pre_fds, now_fds, sizeof(int) * 2);
 		index++;

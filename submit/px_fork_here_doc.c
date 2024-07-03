@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:11:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/03 12:25:05 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:27:28 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-int px_generate_heredoc_unlinked_fd(char *deliminator);
+int	px_generate_heredoc_unlinked_fd(char *deliminator);
 int	px_write_until_deliminator(int out_fd, char	*deliminator);
 
 pid_t	px_fork_here_doc(char *deliminator, int pre_pipe[2], int now_pipe[2])
@@ -45,7 +45,7 @@ pid_t	px_fork_here_doc(char *deliminator, int pre_pipe[2], int now_pipe[2])
 	return (cpid);
 }
 
-int px_generate_heredoc_unlinked_fd(char *deliminator)
+int	px_generate_heredoc_unlinked_fd(char *deliminator)
 {
 	int		fd;
 	int		rdonly_fd;
