@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <stdbool.h>
 #include "px.h"
 #include "libft.h"
 
@@ -22,6 +23,8 @@ char	*px_resolve_command_path(char *command);
 char	*px_resolve_path_str(char *path_str, char *target);
 char	*px_resolve_path(char **path, char *target);
 void	free_termed_null(char **mems);
+bool	px_is_permission_error(int eno);
+bool	px_is_not_exists(int eno);
 
 pid_t	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 {
@@ -30,26 +33,58 @@ pid_t	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 	char		*abs_path;
 	pid_t		index;
 	char		**arguments;
+	int			eno;
 
 	index = 0;
 	arguments = ft_split(cmd, ' ');
 	if (arguments == NULL)
 		return (-1);
 	abs_path = px_resolve_command_path(arguments[0]);
-	if (abs_path == NULL)
+	if (abs_path == NULL && errno != ENOENT)
 		return (px_perrinfo(arguments[0]), free_termed_null(arguments), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{
+		if (abs_path == NULL)
+		{
+			px_perrinfo(arguments[0]);
+			free_termed_null(arguments);
+			exit(127);
+		}
 		dup2(pre_pipe[0], 0);
 		dup2(now_pipe[1], 1);
 		px_close_pipe(pre_pipe);
 		px_close_pipe(now_pipe);
 		execve(abs_path, arguments, environ);
+		eno = errno;
+		px_perrinfo(arguments[0]);
 		free_termed_null(arguments);
-		px_errexit_child();
+		if (px_is_not_exists(eno))
+			exit(127);
+		else if (px_is_permission_error(eno))
+			exit(126);
+		else
+			exit(127);
 	}
 	return (free_termed_null(arguments), free(abs_path), cpid);
+}
+
+bool	px_is_permission_error(int eno)
+{
+	if (eno == EACCES
+		|| eno == EISDIR
+		|| eno == EPERM)
+		return (true);
+	else
+		return (false);
+}
+
+bool	px_is_not_exists(int eno)
+{
+	if (eno == ENOENT)
+		return (true);
+	else
+		return (false);
 }
 
 char	*px_resolve_command_path(char *command)
