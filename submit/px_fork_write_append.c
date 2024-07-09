@@ -20,8 +20,10 @@ pid_t	px_fork_write_append(char *file, int pre_pipe[2], int now_pipe[2])
 {
 	pid_t	cpid;
 	int		fd;
+	mode_t	mode;
 
-	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, mode);
 	if (fd == -1)
 		return (px_perrinfo(file), -1);
 	cpid = fork();
