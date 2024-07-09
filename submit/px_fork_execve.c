@@ -69,6 +69,7 @@ char	*px_resolve_command_path(char *command)
 	else if (paths == NULL)
 		return (ft_set_errno(ENOENT), free(paths), NULL);
 	resolved = px_resolve_path_str(paths, command);
+	free(paths);
 	return (resolved);
 }
 
