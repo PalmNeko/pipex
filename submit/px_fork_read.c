@@ -20,12 +20,15 @@ pid_t	px_fork_read(char *file, int pre_pipe[2], int now_pipe[2])
 	pid_t	cpid;
 	int		fd;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (px_perrinfo(file), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{
+		fd = open(file, O_RDONLY);
+		if (fd == -1)
+		{
+			px_perrinfo(file);
+			exit(1);
+		}
 		close(pre_pipe[0]);
 		close(pre_pipe[1]);
 		close(now_pipe[0]);
@@ -35,6 +38,5 @@ pid_t	px_fork_read(char *file, int pre_pipe[2], int now_pipe[2])
 		close(fd);
 		exit(0);
 	}
-	close(fd);
 	return (cpid);
 }
