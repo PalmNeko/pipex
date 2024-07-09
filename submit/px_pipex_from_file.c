@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   px_pipex_from_file.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 13:14:53 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/03 14:25:20 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:51:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,29 @@
 #include "px_types.h"
 
 t_f_px_fork	px_return_fork_for_file(int index, int argc);
-pid_t		px_pipe_for_file(int argc, char *argv[]);
+pid_t		px_pipe_for_file(int argc, char *argv[], pid_t *file_pid);
 
 int	px_pipex_from_file(int argc, char *argv[])
 {
 	int		exit_status;
 	pid_t	last_pid;
+	pid_t	file_pid;
 
-	last_pid = px_pipe_for_file(argc, argv);
+	last_pid = px_pipe_for_file(argc, argv, &file_pid);
 	if (last_pid == -1)
 		return (-1);
-	exit_status = px_wait_termed(argc - 1, last_pid);
+	exit_status = px_int_wait_termed(argc - 1, last_pid, file_pid);
 	if (exit_status == -1)
 		return (-1);
 	return (exit_status);
 }
 
-pid_t	px_pipe_for_file(int argc, char *argv[])
+pid_t	px_pipe_for_file(int argc, char *argv[], pid_t *file_pid)
 {
 	int			index;
 	int			pre_fds[2];
 	int			now_fds[2];
 	pid_t		last_pid;
-	pid_t		pid;
 
 	if (pipe(pre_fds) == -1)
 		return (-1);
@@ -52,11 +52,11 @@ pid_t	px_pipe_for_file(int argc, char *argv[])
 	{
 		if (pipe(now_fds) == -1)
 			return (px_close_pipe(pre_fds), -1);
-		pid = px_return_fork_for_file(index, argc)(
+		*file_pid = px_return_fork_for_file(index, argc)(
 				argv[index], pre_fds, now_fds);
 		if (index == argc - 2)
-			last_pid = pid;
-		if (pid == -1 || px_close_pipe(pre_fds) == -1)
+			last_pid = *file_pid;
+		if (*file_pid == -1 || px_close_pipe(pre_fds) == -1)
 			return (-1);
 		ft_memmove(pre_fds, now_fds, sizeof(int) * 2);
 		index++;

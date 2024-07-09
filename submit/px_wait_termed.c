@@ -3,44 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   px_wait_termed.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:15:42 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/03 15:26:45 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:02:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdio.h>
+
+int		px_stat_to_exit_stat(int stat);
+pid_t	px_waitpid_termed(pid_t pid, int *stat, int options);
+pid_t	px_wait_termed(int *stat);
 
 /**
  * @brief wait it which child process is terminated.
  * @param times number of children waiting.
  * @return 0 if succeed. -1 if failed and set errno.
  */
-int	px_wait_termed(int child_cnt, pid_t last_pid)
+int	px_int_wait_termed(int child_cnt, pid_t last_pid, pid_t outfile_pid)
 {
 	int		index;
-	int		stat;
-	int		last_stat;
+	int		exit_stat;
+	int		tmp_stat;
 	pid_t	pid;
 
-	last_stat = 0;
+	exit_stat = 0;
 	index = 0;
+	px_waitpid_termed(last_pid, &tmp_stat, 0);
+	index++;
+	exit_stat = px_stat_to_exit_stat(tmp_stat);
+	px_waitpid_termed(outfile_pid, &tmp_stat, 0);
+	index++;
+	if (px_stat_to_exit_stat(tmp_stat) != 0)
+		exit_stat = px_stat_to_exit_stat(tmp_stat);
 	while (index < child_cnt)
 	{
-		pid = wait(&stat);
+		pid = px_wait_termed(&tmp_stat);
 		if (pid == -1)
 			return (-1);
-		else if (pid == last_pid)
-			last_stat = stat;
-		if (WIFEXITED(stat) || WIFSIGNALED(stat))
-			index++;
+		index++;
 	}
-	if (WIFEXITED(last_stat))
-		return (WEXITSTATUS(last_stat));
-	else if (WIFSIGNALED(last_stat))
-		return (128 + WTERMSIG(last_stat));
+	return (exit_stat);
+}
+
+int	px_stat_to_exit_stat(int stat)
+{
+	if (WIFEXITED(stat))
+		return (WEXITSTATUS(stat));
+	else if (WIFSIGNALED(stat))
+		return (128 + WTERMSIG(stat));
 	else
 		return (0);
+}
+
+pid_t	px_waitpid_termed(pid_t pid, int *stat, int options)
+{
+	pid_t	ret;
+
+	while (1)
+	{
+		ret = waitpid(pid, stat, options);
+		if (ret == -1)
+			return (ret);
+		if (WIFEXITED(*stat) || WIFSIGNALED(*stat))
+			break ;
+	}
+	return (ret);
+}
+
+pid_t	px_wait_termed(int *stat)
+{
+	return (px_waitpid_termed(-1, stat, 0));
 }
