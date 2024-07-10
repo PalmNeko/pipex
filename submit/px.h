@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:16:57 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:23:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ t_px_pipe_cmd	*px_new_pcmd(
 					char *outfile,
 					char *command,
 					int here_fd);
+int				px_generate_heredoc_unlinked_fd(char *deliminator);
+void			px_free_pipe_cmd_array(t_px_pipe_cmd **pipe_cmds);
 
 #endif
