@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_new_pipeline_command.c                          :+:      :+:    :+:   */
+/*   px_new_pcmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 14:49:58 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:12:11 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_px_pipe_cmd	*px_new_pipeline_command(
+t_px_pipe_cmd	*px_new_pcmd(
 							char *infile, char *outfile, char *command)
 {
 	t_px_pipe_cmd	*pipe_cmd;

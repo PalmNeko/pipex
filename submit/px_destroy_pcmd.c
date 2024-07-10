@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:45:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 14:47:34 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:11:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_px_pipe_cmd	*px_destroy_pipeline_command(t_px_pipe_cmd *pipe_cmd)
+t_px_pipe_cmd	*px_destroy_pcmd(t_px_pipe_cmd *pipe_cmd)
 {
 	free(pipe_cmd->infile);
 	free(pipe_cmd->outfile);
