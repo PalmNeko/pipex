@@ -6,22 +6,31 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:12:11 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:16:39 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "px.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
+/**
+ * here_fd < 0 unset
+ * here_fd >= 0 setted
+ */
 t_px_pipe_cmd	*px_new_pcmd(
-							char *infile, char *outfile, char *command)
+						char *infile,
+						char *outfile,
+						char *command,
+						int here_fd)
 {
 	t_px_pipe_cmd	*pipe_cmd;
 
 	pipe_cmd = (t_px_pipe_cmd *)malloc(sizeof(t_px_pipe_cmd));
 	if (pipe_cmd == NULL)
 		return (NULL);
+	pipe_cmd->here_fd = here_fd;
 	pipe_cmd->infile = NULL;
 	pipe_cmd->outfile = NULL;
 	pipe_cmd->command = NULL;

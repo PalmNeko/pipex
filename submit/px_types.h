@@ -6,12 +6,14 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:54:24 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 14:46:46 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:15:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PX_TYPES_H
 # define PX_TYPES_H
+
+#include <stdbool.h>
 
 typedef int	(*t_f_px_fork)(char *argument, int pre_pipe[2], int now_pipe[2]);
 
@@ -20,6 +22,7 @@ typedef struct s_px_pipeline_command
 	char	*infile;
 	char	*outfile;
 	char	*command;
+	int		here_fd;
 }	t_px_pipe_cmd;
 
 #endif

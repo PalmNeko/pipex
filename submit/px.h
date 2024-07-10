@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:11:42 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:16:57 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void			px_perrinfo(char *info);
 void			px_perror_cmd_not_found(char *info);
 void			px_pe(char *info);
 t_px_pipe_cmd	*px_destroy_pcmd(t_px_pipe_cmd *pipe_cmd);
-t_px_pipe_cmd	*px_new_pcmd(char *infile, char *outfile, char *command);
+t_px_pipe_cmd	*px_new_pcmd(
+					char *infile,
+					char *outfile,
+					char *command,
+					int here_fd);
 
 #endif
