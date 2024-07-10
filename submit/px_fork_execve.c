@@ -25,17 +25,15 @@ char	*px_resolve_path(char **path, char *target);
 void	free_termed_null(char **mems);
 bool	px_is_permission_error(int eno);
 bool	px_is_not_exists(int eno);
+int		px_on_fork_execve(char *abs_path, char **arguments, int pre_pipe[2], int now_pipe[2]);
 
 pid_t	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 {
-	extern char	**environ;
-	int			cpid;
+	pid_t		cpid;
 	char		*abs_path;
-	pid_t		index;
 	char		**arguments;
-	int			eno;
+	int			exit_stat;
 
-	index = 0;
 	arguments = ft_split(cmd, ' ');
 	if (arguments == NULL)
 		return (-1);
@@ -45,28 +43,42 @@ pid_t	px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2])
 	cpid = fork();
 	if (cpid == 0)
 	{
-		if (abs_path == NULL)
-		{
-			px_perrinfo(arguments[0]);
-			free_termed_null(arguments);
-			exit(127);
-		}
-		dup2(pre_pipe[0], 0);
-		dup2(now_pipe[1], 1);
-		px_close_pipe(pre_pipe);
-		px_close_pipe(now_pipe);
-		execve(abs_path, arguments, environ);
-		eno = errno;
-		px_perrinfo(arguments[0]);
-		free_termed_null(arguments);
-		if (px_is_not_exists(eno))
-			exit(127);
-		else if (px_is_permission_error(eno))
-			exit(126);
+		exit_stat = px_on_fork_execve(abs_path, arguments, pre_pipe, now_pipe);
+		if (exit_stat == 127)
+			px_perror_cmd_not_found(arguments[0]);
 		else
-			exit(127);
+			px_perrinfo(arguments[0]);
 	}
-	return (free_termed_null(arguments), free(abs_path), cpid);
+	if (cpid == 0)
+		exit(exit_stat);
+	free_termed_null(arguments);
+	free(abs_path);
+	return (cpid);
+}
+
+/**
+ * success: not returned because call execve.
+ * return 127: command not found
+ * return 126: permission error
+ * return 125: some error
+ */
+int	px_on_fork_execve(char *abs_path, char **arguments, int pre_pipe[2], int now_pipe[2])
+{
+	extern char	**environ;
+
+	if (abs_path == NULL)
+		return (127);
+	dup2(pre_pipe[0], 0);
+	dup2(now_pipe[1], 1);
+	px_close_pipe(pre_pipe);
+	px_close_pipe(now_pipe);
+	execve(abs_path, arguments, environ);
+	if (px_is_not_exists(errno))
+		return (127);
+	else if (px_is_permission_error(errno))
+		return (126);
+	else
+		return (125);
 }
 
 bool	px_is_permission_error(int eno)

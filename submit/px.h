@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/09 17:48:31 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:27:53 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ int		px_close_pipe(int pipe[2]);
 int		px_int_wait_termed(int child_cnt, pid_t last_pid, pid_t outfile_pid);
 void	px_errexit_child(void);
 void	px_perrinfo(char *info);
+void	px_perror_cmd_not_found(char *info);
+void	px_pe(char *info);
 
 #endif
