@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_types.h                                         :+:      :+:    :+:   */
+/*   px_destroy_pipeline_command.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 13:54:24 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 14:46:46 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/10 14:45:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/10 14:47:34 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PX_TYPES_H
-# define PX_TYPES_H
+#include "px_types.h"
+#include "libft.h"
+#include <stdlib.h>
 
-typedef int	(*t_f_px_fork)(char *argument, int pre_pipe[2], int now_pipe[2]);
-
-typedef struct s_px_pipeline_command
+t_px_pipe_cmd	*px_destroy_pipeline_command(t_px_pipe_cmd *pipe_cmd)
 {
-	char	*infile;
-	char	*outfile;
-	char	*command;
-}	t_px_pipe_cmd;
-
-#endif
+	free(pipe_cmd->infile);
+	free(pipe_cmd->outfile);
+	free(pipe_cmd->command);
+}
