@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:16:39 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:47:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,8 @@ t_px_pipe_cmd	*px_new_pcmd(
 	if (pipe_cmd == NULL)
 		return (NULL);
 	pipe_cmd->here_fd = here_fd;
-	pipe_cmd->infile = NULL;
-	pipe_cmd->outfile = NULL;
-	pipe_cmd->command = NULL;
-	pipe_cmd->infile = ft_strdup(infile);
-	if (pipe_cmd->infile == NULL)
-		return (px_destroy_pipeline_command(pipe_cmd), NULL);
-	pipe_cmd->outfile = ft_strdup(outfile);
-	if (pipe_cmd->outfile == NULL)
-		return (px_destroy_pipeline_command(pipe_cmd), NULL);
-	pipe_cmd->command = ft_strdup(command);
-	if (pipe_cmd->command == NULL)
-		return (px_destroy_pipeline_command(pipe_cmd), NULL);
+	pipe_cmd->infile = infile;
+	pipe_cmd->outfile = outfile;
+	pipe_cmd->command = command;
 	return (pipe_cmd);
 }
