@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:10 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:26:22 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:32:05 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ t_px_pipe_cmd	*_px_gen_pipe_cmd_for_heredoc(int index, int argc, char *argv[])
 	else if (index < argc - 2)
 		return px_new_pcmd(NULL, NULL, argv[index], -1);
 	else
-		return px_new_pcmd(NULL, argv[index - 1], argv[index], -1);
+		return px_new_pcmd(NULL, argv[index], argv[index + 1], -1);
 }
