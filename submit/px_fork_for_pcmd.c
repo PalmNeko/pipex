@@ -6,22 +6,24 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:39:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:31:37 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:59:22 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include "px.h"
+#include "libft.h"
 
 int	px_set_fds(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2]);
 int	px_set_infd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2]);
 int	px_set_outfd(t_px_pipe_cmd *pipe_cmd, int out_pipe[2]);
 
-pid_t	px_for_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2])
+pid_t	px_fork_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2])
 {
 	pid_t		cpid;
 	char		*abs_path;

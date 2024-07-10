@@ -6,11 +6,12 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:20:45 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:30:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:58:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "px.h"
 
 int	px_execve(char *abs_path, char **arguments)
 {

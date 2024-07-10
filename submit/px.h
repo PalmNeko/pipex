@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:50:54 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:59:32 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ void			px_free_errinfo(void);
 char			*px_get_errinfo(void);
 int				px_set_errinfo(char *errinfo);
 int				px_execve(char *abs_path, char **arguments);
-pid_t			px_for_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2]);
+pid_t			px_fork_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2]);
 int				px_int_wait_termed(int child_cnt, pid_t last_pid);
 int				px_fork_all_pcmd(t_px_pipe_cmd **pipe_cmd);
 char			*px_resolve_command_path(char *command);
+void			free_termed_null(char **mems);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:57 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:44:54 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:59:40 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	px_fork_all_pcmd(t_px_pipe_cmd **pipe_cmd)
 	{
 		if (pipe(out_pipe) == -1)
 			return (-1);
-		last_pid = px_fork_execve(pipe_cmd[proc_cnt], in_pipe, out_pipe);
+		last_pid = px_fork_for_pcmd(pipe_cmd[proc_cnt], in_pipe, out_pipe);
 		px_close_pipe(in_pipe);
 		ft_memmove(in_pipe, out_pipe, sizeof(int) * 2);
 		if (last_pid == -1)
