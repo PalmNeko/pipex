@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:15:42 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/09 18:02:04 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:42:41 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ pid_t	px_wait_termed(int *stat);
  * @param times number of children waiting.
  * @return 0 if succeed. -1 if failed and set errno.
  */
-int	px_int_wait_termed(int child_cnt, pid_t last_pid, pid_t outfile_pid)
+int	px_int_wait_termed(int child_cnt, pid_t last_pid)
 {
 	int		index;
 	int		exit_stat;
@@ -33,9 +33,6 @@ int	px_int_wait_termed(int child_cnt, pid_t last_pid, pid_t outfile_pid)
 	exit_stat = 0;
 	index = 0;
 	px_waitpid_termed(last_pid, &tmp_stat, 0);
-	index++;
-	exit_stat = px_stat_to_exit_stat(tmp_stat);
-	px_waitpid_termed(outfile_pid, &tmp_stat, 0);
 	index++;
 	if (px_stat_to_exit_stat(tmp_stat) != 0)
 		exit_stat = px_stat_to_exit_stat(tmp_stat);
