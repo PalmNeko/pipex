@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:57 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:59:40 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:08:55 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ int	px_fork_all_pcmd(t_px_pipe_cmd **pipe_cmd)
 	pid_t	last_pid;
 	int		proc_cnt;
 	int		in_pipe[2];
-	int		out_pipe[2];
 
 	proc_cnt = 0;
 	if (pipe(in_pipe) == -1)
 		return (-1);
 	while (pipe_cmd[proc_cnt] != NULL)
 	{
-		if (pipe(out_pipe) == -1)
-			return (-1);
-		last_pid = px_fork_for_pcmd(pipe_cmd[proc_cnt], in_pipe, out_pipe);
-		px_close_pipe(in_pipe);
-		ft_memmove(in_pipe, out_pipe, sizeof(int) * 2);
-		if (last_pid == -1)
-			return (px_close_pipe(out_pipe), -1);
+		last_pid = px_fork_for_pipe(pipe_cmd[proc_cnt], in_pipe);
+		if (last_pid == 0)
+		{
+			if (px_execve(pipe_cmd[proc_cnt]->abs_path, pipe_cmd[proc_cnt]->arguments) == -1)
+				return (-1);
+		}
+		else if (last_pid == -1)
+			return (px_close_pipe(in_pipe), -1);
 		proc_cnt++;
 	}
 	return (px_int_wait_termed(proc_cnt, last_pid));
