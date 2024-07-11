@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:10 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:56:19 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:30:37 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include <errno.h>
 #include <stdlib.h>
 
-t_px_pipe_cmd	*_px_gen_pipe_cmd_for_heredoc(int index, int argc, char *argv[]);
+t_px_pipe_cmd	*_px_gen_pipe_cmd_for_heredoc(
+					int index, int argc, char *argv[]);
 
 t_px_pipe_cmd	**px_gen_pcmd_for_heredoc(int argc, char *argv[])
 {

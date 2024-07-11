@@ -6,14 +6,14 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:54:24 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 12:38:51 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:31:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PX_TYPES_H
 # define PX_TYPES_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef int	(*t_f_px_fork)(char *argument, int pre_pipe[2], int now_pipe[2]);
 

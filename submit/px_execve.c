@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:20:45 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 18:25:29 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:30:26 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 /**
  * @return 125 generic error. 127 command not found. 126 permission error.
  */
-#include <stdio.h>
 int	px_execve(t_px_pipe_cmd *pipe_cmd)
 {
 	extern char	**environ;
