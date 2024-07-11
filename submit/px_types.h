@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:54:24 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:15:13 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:38:51 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_px_pipeline_command
 	char	*infile;
 	char	*outfile;
 	char	*command;
+	char	*abs_path;
+	char	**arguments;
 	int		here_fd;
 }	t_px_pipe_cmd;
 

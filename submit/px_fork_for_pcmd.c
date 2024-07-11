@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:39:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:59:22 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:47:48 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,15 @@ int	px_set_outfd(t_px_pipe_cmd *pipe_cmd, int out_pipe[2]);
 pid_t	px_fork_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2])
 {
 	pid_t		cpid;
-	char		*abs_path;
-	char		**arguments;
 
-	arguments = ft_split(pipe_cmd->command, ' ');
-	if (arguments == NULL)
-		return (-1);
-	abs_path = px_resolve_command_path(arguments[0]);
-	if (abs_path == NULL && errno != ENOENT)
-		return (px_perrinfo(arguments[0]), free_termed_null(arguments), -1);
 	cpid = fork();
 	if (cpid == 0)
 	{
 		if (px_set_fds(pipe_cmd, in_pipe, out_pipe) != 0
-			|| px_execve(abs_path, arguments) == -1)
-			return (free_termed_null(arguments), free(abs_path), -2);
+			|| px_execve(pipe_cmd->abs_path, pipe_cmd->arguments) == -1)
+			return (-2);
 	}
-	return (free_termed_null(arguments), free(abs_path), cpid);
+	return (cpid);
 }
 
 int	px_set_fds(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2])
