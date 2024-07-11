@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:36 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/03 15:51:25 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:10:11 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	result = px_main(argc, argv);
-	if (result == -1)
-	{
-		px_print_error(result);
-		return (1);
-	}
+	if (result != 0)
+		px_perrinfo(result);
+	px_free_errinfo();
 	return (result);
 }
 

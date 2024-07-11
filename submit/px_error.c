@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_errors.h                                        :+:      :+:    :+:   */
+/*   px_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/30 12:59:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 15:47:46 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/11 15:42:30 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/11 15:46:44 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PX_ERRORS_H
-# define PX_ERRORS_H
+#include <stdbool.h>
 
-# include <limits.h>
-
-typedef enum e_px_errors
+int	px_error(int errno, bool is_set)
 {
-	PX_EARGCNT = INT_MIN,
-	PX_EHEREARG,
-}	t_px_errors;
+	static int	eno;
 
-#endif
+	if (is_set)
+	{
+		eno = errno;
+		return (0);
+	}
+	else
+		return (eno);
+}
+
+void	px_set_error(int errno)
+{
+	px_error(errno, true);
+}
+
+int	px_get_error(void)
+{
+	return (px_error(0, true));
+}

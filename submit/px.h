@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 14:27:47 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:08:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				px_fork_execve(char *cmd, int pre_pipe[2], int now_pipe[2]);
 int				px_read_and_write(int read_fd, int write_fd);
 int				px_close_pipe(int pipe[2]);
 void			px_errexit_child(void);
-void			px_perrinfo(void);
+void			px_perrinfo(int status);
 void			px_perror_cmd_not_found(char *info);
 void			px_pe(char *info);
 void			px_destroy_pcmd(t_px_pipe_cmd *pipe_cmd);
@@ -48,9 +48,14 @@ int				px_set_errinfo(char *errinfo);
 int				px_execve(t_px_pipe_cmd *pipe_cmd);
 pid_t			px_fork_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2]);
 int				px_int_wait_termed(int child_cnt, pid_t last_pid);
-int				px_fork_all_pcmd(t_px_pipe_cmd **pipe_cmd);
+int				px_run_all_pcmd(t_px_pipe_cmd **pipe_cmd);
 char			*px_resolve_command_path(char *command);
 void			free_termed_null(char **mems);
 pid_t			px_fork_for_pipe(t_px_pipe_cmd *pipe_cmd, int in_pipe[2]);
+int				px_get_error(void);
+void			px_set_error(int errno);
+bool			px_is_permission_error(int eno);
+bool			px_is_not_exists(int eno);
+
 
 #endif

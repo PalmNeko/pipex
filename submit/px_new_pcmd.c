@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 12:46:22 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:29:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ t_px_pipe_cmd	*px_new_pcmd(
 	pipe_cmd->abs_path = px_resolve_command_path(pipe_cmd->arguments[0]);
 	if (pipe_cmd->abs_path == NULL && errno == ENOMEM)
 		return (px_destroy_pcmd(pipe_cmd), NULL);
+	errno = 0;
 	return (pipe_cmd);
 }
