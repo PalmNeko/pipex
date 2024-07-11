@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:57 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:50:39 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:28:00 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,10 @@ char	*px_resolve_command_path(char *command)
 		return (ft_strdup(command));
 	if (access(command, F_OK) == -1 && errno != ENOENT)
 		return (NULL);
-	paths = ft_getenv_value("PATH");
-	if (paths == NULL && errno != 0)
-		return (NULL);
-	else if (paths == NULL)
-		return (ft_set_errno(ENOENT), free(paths), NULL);
+	paths = ft_getenv("PATH");
+	if (paths == NULL)
+		return (ft_set_errno(ENOENT), NULL);
 	resolved = px_resolve_path_str(paths, command);
-	free(paths);
 	return (resolved);
 }
 
