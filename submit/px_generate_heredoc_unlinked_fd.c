@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:18:27 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 15:19:42 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:36:39 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,17 @@ int	px_generate_heredoc_unlinked_fd(char *deliminator)
 {
 	int		fd;
 	int		rdonly_fd;
-	char	*template;
+	char	template[11];
 
-	template = ft_strdup("tmp.XXXXXX");
-	if (template == NULL)
-		return (-1);
+	ft_strlcpy(template, "tmp.XXXXXX", 11);
 	fd = ft_mkostemp(template, 0);
 	if (fd == -1)
-		return (free(template), -1);
+		return (-1);
 	rdonly_fd = open(template, O_RDONLY);
 	if (rdonly_fd == -1)
-		return (free(template), close(fd), -1);
+		return (close(fd), -1);
 	if (unlink(template) == -1)
-		return (free(template), close(fd), close(rdonly_fd), -1);
-	free(template);
+		return (close(fd), close(rdonly_fd), -1);
 	if (px_write_until_deliminator(fd, deliminator) == -1)
 		return (close(fd), close(rdonly_fd), -1);
 	close(fd);
