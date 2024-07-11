@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:48:57 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 15:28:00 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:20:03 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ char	*px_resolve_command_path(char *command)
 
 	if (command == NULL)
 		return (ft_set_errno(ENOENT), NULL);
-	else if (ft_strmatch("^./", command) || ft_strmatch("^/", command))
+	else if (ft_strmatch("^../", command)
+		|| ft_strmatch("^./", command)
+		|| ft_strmatch("^/", command))
 		return (ft_strdup(command));
 	if (access(command, F_OK) == -1 && errno != ENOENT)
 		return (NULL);
