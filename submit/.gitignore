@@ -2,5 +2,7 @@
 *.a
 *.o
 *.d
+*.out
 pipex
+bonus
 libft/
