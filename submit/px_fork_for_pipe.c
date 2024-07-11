@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:32:37 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 14:55:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:29:00 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,16 @@ int	px_set_outfd(t_px_pipe_cmd *pipe_cmd, int out_pipe[2]);
 
 /**
  * @param in_param input pipe. this must be not NULL.
- * @return 0 if child process. -1 if some error (on parent). -2 if some error (on child) > 0 if parent
+ * @return
+ * 	0 if child process.
+ * 	-1 if some error (on parent).
+ * 	-2 if some error (on child) > 0 if parent
  * @note overwrite in_pipe
  */
 pid_t	px_fork_for_pipe(t_px_pipe_cmd *pipe_cmd, int in_pipe[2])
 {
 	int		out_pipe[2];
+	int		result;
 	pid_t	cpid;
 
 	if (pipe(out_pipe) == -1)
@@ -35,12 +39,15 @@ pid_t	px_fork_for_pipe(t_px_pipe_cmd *pipe_cmd, int in_pipe[2])
 	cpid = fork();
 	if (cpid == 0)
 	{
-		if (px_set_infd(pipe_cmd, in_pipe) != 0)
-			return (px_close_pipe(in_pipe), px_close_pipe(out_pipe), px_set_errinfo(pipe_cmd->infile), -2);
+		result = px_set_infd(pipe_cmd, in_pipe);
 		px_close_pipe(in_pipe);
-		if (px_set_outfd(pipe_cmd, out_pipe) != 0)
-			return (px_close_pipe(out_pipe), px_set_errinfo(pipe_cmd->outfile), -2);
+		if (result != 0)
+			return (px_close_pipe(out_pipe),
+				px_set_errinfo(pipe_cmd->infile), -2);
+		result = px_set_outfd(pipe_cmd, out_pipe);
 		px_close_pipe(out_pipe);
+		if (result != 0)
+			return (px_set_errinfo(pipe_cmd->infile), -2);
 		return (0);
 	}
 	px_close_pipe(in_pipe);
