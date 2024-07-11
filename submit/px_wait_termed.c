@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:15:42 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/10 16:42:41 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:16:53 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	px_int_wait_termed(int child_cnt, pid_t last_pid)
 
 	exit_stat = 0;
 	index = 0;
+	tmp_stat = 0;
 	px_waitpid_termed(last_pid, &tmp_stat, 0);
 	index++;
 	if (px_stat_to_exit_stat(tmp_stat) != 0)
@@ -40,7 +41,7 @@ int	px_int_wait_termed(int child_cnt, pid_t last_pid)
 	{
 		pid = px_wait_termed(&tmp_stat);
 		if (pid == -1)
-			return (-1);
+			return (1);
 		index++;
 	}
 	return (exit_stat);
