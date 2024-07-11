@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 14:18:30 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:27:47 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int				px_generate_heredoc_unlinked_fd(char *deliminator);
 void			px_free_errinfo(void);
 char			*px_get_errinfo(void);
 int				px_set_errinfo(char *errinfo);
-int				px_execve(char *abs_path, char **arguments);
+int				px_execve(t_px_pipe_cmd *pipe_cmd);
 pid_t			px_fork_for_pcmd(t_px_pipe_cmd *pipe_cmd, int in_pipe[2], int out_pipe[2]);
 int				px_int_wait_termed(int child_cnt, pid_t last_pid);
 int				px_fork_all_pcmd(t_px_pipe_cmd **pipe_cmd);
