@@ -2,7 +2,6 @@
 NAME          = bonus
 SRCDIR        = .
 SRCS          = \
-	./px_print_error.c \
 	./px_perrinfo.c \
 	./px_perror_cmd_not_found.c \
 	./px_wait_termed.c \

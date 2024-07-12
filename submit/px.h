@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/12 18:34:37 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:43:05 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void			px_free_errinfo(void);
 void			px_free_pcmd_array(t_px_pipe_cmd **pipe_cmds);
 void			px_perrinfo(int status);
 void			px_perror_cmd_not_found(char *info);
-void			px_print_error(int px_main_error);
 void			px_set_error(int errno);
 
 #endif
