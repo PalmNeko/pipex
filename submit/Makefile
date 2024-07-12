@@ -18,7 +18,7 @@ SRCS          = \
 	./px_close_pipe.c \
 	./px_fork_for_pipe.c \
 	./main.c \
-	./px_fork_all_pcmd.c \
+	./px_run_all_pcmd.c \
 	./px_main.c \
 	./px_is_permission_error.c \
 	./px_is_not_exists.c
