@@ -21,7 +21,6 @@ SRCS          = \
 	./main.c \
 	./px_fork_all_pcmd.c \
 	./px_main.c \
-	./px_error.c \
 	./px_is_permission_error.c \
 	./px_is_not_exists.c
 OBJS          = $(SRCS:%.c=%.o)
