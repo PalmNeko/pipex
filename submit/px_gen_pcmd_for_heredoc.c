@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:10 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 19:30:37 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:11:31 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ t_px_pipe_cmd	**px_gen_pcmd_for_heredoc(int argc, char *argv[])
 
 t_px_pipe_cmd	*_px_gen_pipe_cmd_for_heredoc(int index, int argc, char *argv[])
 {
-	int	here_fd;
+	int				here_fd;
+	t_px_pipe_cmd	*pipe_cmd;
 
 	if (index == 3)
 	{
 		here_fd = px_generate_heredoc_unlinked_fd(argv[index - 1]);
 		if (here_fd == -1)
 			return (NULL);
-		return (px_new_pcmd(NULL, NULL, argv[index], here_fd));
+		pipe_cmd = px_new_pcmd(NULL, NULL, argv[index], here_fd);
 	}
 	else if (index < argc - 2)
-		return (px_new_pcmd(NULL, NULL, argv[index], -1));
+		pipe_cmd = px_new_pcmd(NULL, NULL, argv[index], -1);
 	else
-		return (px_new_pcmd(NULL, argv[index + 1], argv[index], -1));
+		pipe_cmd = px_new_pcmd(NULL, argv[index + 1], argv[index], -1);
+	pipe_cmd->is_here_doc = true;
+	return (pipe_cmd);
 }

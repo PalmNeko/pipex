@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:40:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 16:29:15 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:09:37 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_px_pipe_cmd	*px_new_pcmd(
 	pipe_cmd->infile = infile;
 	pipe_cmd->outfile = outfile;
 	pipe_cmd->command = command;
+	pipe_cmd->is_here_doc = false;
 	pipe_cmd->arguments = ft_split(pipe_cmd->command, ' ');
 	if (pipe_cmd->arguments == NULL)
 		return (px_destroy_pcmd(pipe_cmd), NULL);

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:32:37 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 19:29:00 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:12:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,13 @@ int	px_set_outfd(t_px_pipe_cmd *pipe_cmd, int out_pipe[2])
 	mode_t	mode;
 
 	flag = O_WRONLY | O_CREAT;
-	if (pipe_cmd->here_fd != -1)
-		flag |= O_TRUNC;
-	else
+	if (pipe_cmd->is_here_doc == true)
 		flag |= O_APPEND;
+	else
+		flag |= O_TRUNC;
 	mode = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR | S_IWGRP | S_IWOTH;
 	if (pipe_cmd->outfile != NULL)
 		fd = open(pipe_cmd->outfile, flag, mode);
-	else if (pipe_cmd->here_fd != -1)
-		fd = pipe_cmd->here_fd;
 	else
 		fd = out_pipe[1];
 	if (fd == -1)
