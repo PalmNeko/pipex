@@ -4,7 +4,7 @@ SRCDIR        = .
 SRCS          = \
 	./px_perrinfo.c \
 	./px_perror_cmd_not_found.c \
-	./px_wait_termed.c \
+	./px_int_wait_termed.c \
 	./px_destroy_pcmd.c \
 	./px_new_pcmd.c \
 	./px_generate_heredoc_unlinked_fd.c \
@@ -51,6 +51,9 @@ show:
 	@printf "LDLIBS		: $(LDLIBS)\n"
 	@printf "SRCS		:\n	$(SRCS)\n"
 	@printf "OBJS		:\n	$(OBJS)\n"
+
+test:
+	bash -c "$$(curl -s https://raw.githubusercontent.com/PalmNeko/common-core-tester/main/pipex/test.sh)"
 
 debug: CFLAGS  += -g -O0 -fsanitize=leak
 debug: LDFLAGS += -g -O0 -fsanitize=leak
