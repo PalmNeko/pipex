@@ -53,7 +53,8 @@ show:
 	@printf "OBJS		:\n	$(OBJS)\n"
 
 test:
-	bash -c "$$(curl -s https://raw.githubusercontent.com/PalmNeko/common-core-tester/main/pipex/test.sh)"
+	# bash -c "$$(curl -s https://raw.githubusercontent.com/PalmNeko/common-core-tester/main/pipex/test.sh)"
+	bash .test.sh
 
 debug: CFLAGS  += -g -O0 -fsanitize=leak
 debug: LDFLAGS += -g -O0 -fsanitize=leak
