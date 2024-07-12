@@ -62,12 +62,13 @@ debug: re
 
 .PHONY: all
 
-$(NAME): $(LIBFT)/$(LIBFT).a $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT)/$(LIBFT).a $(OBJS)
 	make -C $(LIBFT)
 	$(LINK.o) $(OBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
-bonus: $(LIBFT) $(OBJS)
-	make -f .bonus.mk
+.PHONY: bonus
+bonus:
+	make -f .bonus.mk bonus
 
 $(LIBFT)/$(LIBFT).a: $(LIBFT)
 	make -C $(LIBFT)

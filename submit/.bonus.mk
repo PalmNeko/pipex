@@ -33,13 +33,15 @@ LDLIBS        += -lft
 LIBFT         = libft
 LIBS          = $(LIBFT)
 
-all: $(NAME)
+all: $(LIBFT)/$(LIBFT).a $(NAME)
 
 clean:
+	make -C libft clean
 	rm -f $(OBJS) $(DEPENDS)
 	rm -rf $(MLX_DIR)
 
 fclean: clean
+	make -C libft fclean
 	rm -f $(NAME)
 
 re: fclean all
@@ -58,11 +60,14 @@ debug: re
 
 .PHONY: all
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT)/$(LIBFT).a $(OBJS)
+	make -C $(LIBFT)
 	$(LINK.o) $(OBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
+$(LIBFT)/$(LIBFT).a: $(LIBFT)
+	make -C $(LIBFT)
+
 $(LIBFT):
-	git clone git@github.com:PalmNeko/Libft.git $@
-	cd $@ && make
+	git clone git@github.com:PalmNeko/Libft.git $(LIBFT)
 
 -include $(DEPENDS)
