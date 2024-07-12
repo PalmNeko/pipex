@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 13:54:24 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/12 18:09:17 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:33:22 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define PX_TYPES_H
 
 # include <stdbool.h>
-
-typedef int	(*t_f_px_fork)(char *argument, int pre_pipe[2], int now_pipe[2]);
 
 typedef struct s_px_pipeline_command
 {
