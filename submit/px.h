@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 12:57:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 19:33:35 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:34:37 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_px_pipe_cmd	*px_new_pcmd(
 					char *infile, char *outfile, char *command, int here_fd);
 void			free_termed_null(char **mems);
 void			px_destroy_pcmd(t_px_pipe_cmd *pipe_cmd);
-void			px_errexit_child(void);
 void			px_free_errinfo(void);
 void			px_free_pcmd_array(t_px_pipe_cmd **pipe_cmds);
 void			px_perrinfo(int status);

@@ -5,7 +5,6 @@ SRCS          = \
 	./px_print_error.c \
 	./px_perrinfo.c \
 	./px_perror_cmd_not_found.c \
-	./px_errexit_child.c \
 	./px_wait_termed.c \
 	./px_destroy_pcmd.c \
 	./px_new_pcmd.c \
