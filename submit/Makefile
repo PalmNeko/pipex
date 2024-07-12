@@ -14,7 +14,6 @@ SRCS          = \
 	./px_errinfo.c \
 	./px_execve.c \
 	./px_resolve_command_path.c \
-	./free_termed_null.c \
 	./px_close_pipe.c \
 	./px_fork_for_pipe.c \
 	./main.c \
