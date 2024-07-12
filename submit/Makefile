@@ -33,7 +33,7 @@ LDLIBS        += -lft
 LIBFT         = libft
 LIBS          = $(LIBFT)
 
-all: $(NAME) bonus
+all: $(LIBFT)/$(LIBFT).a $(NAME) bonus
 
 clean:
 	make -f .bonus.mk clean
@@ -60,16 +60,19 @@ debug: CFLAGS  += -g -O0 -fsanitize=leak
 debug: LDFLAGS += -g -O0 -fsanitize=leak
 debug: re
 
-bonus:
-	make -f .bonus.mk
+.PHONY: all
 
-.PHONY: all bonus
-
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT)/$(LIBFT).a $(LIBFT) $(OBJS)
+	make -C $(LIBFT)
 	$(LINK.o) $(OBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
+bonus: $(LIBFT) $(OBJS)
+	make -f .bonus.mk
+
+$(LIBFT)/$(LIBFT).a: $(LIBFT)
+	make -C $(LIBFT)
+
 $(LIBFT):
-	git clone git@github.com:PalmNeko/Libft.git $@
-	cd $@ && make
+	git clone git@github.com:PalmNeko/Libft.git $(LIBFT)
 
 -include $(DEPENDS)
