@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:18:27 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 19:22:18 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:29:34 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,29 @@ int	px_here_doc_stdin(int out_fd, char *deliminator)
 
 int	px_write_until_deliminator(int in_fd, int out_fd, char *deliminator)
 {
-	char	*check_deliminator;
 	char	*line;
 	int		read_term;
+	char	*newline_ptr;
 
 	read_term = 0;
-	check_deliminator = ft_strjoin(deliminator, "\n");
-	if (check_deliminator == NULL)
-		return (-1);
 	errno = 0;
 	ft_putstr_fd("heredoc> ", 1);
 	line = get_next_line(in_fd);
 	while (line != NULL)
 	{
-		read_term = ft_strcmp(line, check_deliminator) == 0;
+		newline_ptr = ft_strrchr(line, '\n');
+		if (newline_ptr != NULL)
+			*newline_ptr = '\0';
+		read_term = ft_strcmp(line, deliminator) == 0;
 		if (read_term)
 			break ;
+		if (newline_ptr != NULL)
+			*newline_ptr = '\n';
 		ft_putstr_fd(line, out_fd);
 		free(line);
 		ft_putstr_fd("heredoc> ", 1);
 		line = get_next_line(in_fd);
 	}
 	free(line);
-	free(check_deliminator);
 	return ((int)ft_ifl(errno != 0, -1, read_term));
 }
