@@ -1,0 +1,8 @@
+services:
+  working:
+    image: instance42
+    build:
+      context: ./docker/instance42
+    command: cat
+    init: true
+    tty: true
