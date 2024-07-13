@@ -8,11 +8,15 @@ down: # down docker container
 
 cp:
 	docker-compose up -d
-	docker-compose exec -u root -T  working  rm -rf /app/*
-	docker-compose cp ./submit working:/app
+	make rm
+	docker-compose cp ./submit/. working:/app
 	docker-compose exec -u root -T  working  chown -R pipex /app
+
+rm:
+	docker-compose up -d
+	docker-compose exec -u root working bash -c 'test -d /app && rm -rf /app/*; exit 0'
 
 test:
 	docker-compose up -d
-	docker-compose cp ./submit working:/app
+	make cp
 	docker-compose exec -Tw /app working  make test
