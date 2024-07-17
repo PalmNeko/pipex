@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:27:29 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/12 18:10:36 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:50:42 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_px_pipe_cmd	**px_gen_pcmd_for_file(int argc, char *argv[])
 t_px_pipe_cmd	*_px_gen_pipe_cmd_for_file(int index, int argc, char *argv[])
 {
 	t_px_pipe_cmd	*pipe_cmd;
-
 
 	if (index == 2)
 		pipe_cmd = px_new_pcmd(argv[index - 1], NULL, argv[index], -1);
