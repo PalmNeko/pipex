@@ -76,6 +76,6 @@ $(LIBFT)/$(LIBFT).a: $(LIBFT)
 	make -C $(LIBFT)
 
 $(LIBFT):
-	git clone git@github.com:PalmNeko/Libft.git $(LIBFT)
+	git clone git@github.com:PalmNeko/Libft.git $(LIBFT) -b pipex
 
 -include $(DEPENDS)
