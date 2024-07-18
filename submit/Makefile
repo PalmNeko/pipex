@@ -52,7 +52,9 @@ show:
 	@printf "SRCS		:\n	$(SRCS)\n"
 	@printf "OBJS		:\n	$(OBJS)\n"
 
-test:
+test: libft
+	! norminette *.c *.h | grep -v OK
+	! norminette libft/submit/*.c libft/submit/*.h | grep -v OK
 	# bash -c "$$(curl -s https://raw.githubusercontent.com/PalmNeko/common-core-tester/main/pipex/test.sh)"
 	bash .test.sh
 
