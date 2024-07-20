@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:32:37 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/12 18:12:49 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:45:08 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ pid_t	px_fork_for_pipe(t_px_pipe_cmd *pipe_cmd, int in_pipe[2])
 		result = px_set_outfd(pipe_cmd, out_pipe);
 		px_close_pipe(out_pipe);
 		if (result != 0)
-			return (px_set_errinfo(pipe_cmd->infile), -2);
+			return (px_set_errinfo(pipe_cmd->outfile), -2);
 		return (0);
 	}
 	px_close_pipe(in_pipe);
