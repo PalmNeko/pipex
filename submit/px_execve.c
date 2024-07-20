@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:20:45 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/07/11 19:30:26 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:44:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	px_execve(t_px_pipe_cmd *pipe_cmd)
 	path = ft_getenv("PATH");
 	if (path == NULL || path[0] == '\0')
 		return (ft_set_errno(ENOENT), 127);
+	if (pipe_cmd->abs_path == NULL || pipe_cmd->arguments[0] == NULL)
+		return (ft_set_errno(EFAULT), 127);
 	execve(pipe_cmd->abs_path, pipe_cmd->arguments, environ);
 	if (px_is_permission_error(errno))
 		return (126);
