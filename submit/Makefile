@@ -52,11 +52,13 @@ show:
 	@printf "SRCS		:\n	$(SRCS)\n"
 	@printf "OBJS		:\n	$(OBJS)\n"
 
-test: libft
+test: libft test.sh
 	! norminette *.c *.h | grep -v OK
 	! norminette libft/submit/*.c libft/submit/*.h | grep -v OK
-	# bash -c "$$(curl -s https://raw.githubusercontent.com/PalmNeko/common-core-tester/main/pipex/test.sh)"
-	bash .test.sh
+	bash test.sh
+
+test.sh:
+	curl -Os https://raw.githubusercontent.com/PalmNeko/common-core-tester/pipex/pipex/test.sh
 
 debug: CFLAGS  += -g -O0 -fsanitize=leak
 debug: LDFLAGS += -g -O0 -fsanitize=leak
